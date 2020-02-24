@@ -3,19 +3,21 @@ import { AsyncStorage, Button, StyleSheet, Text, View } from "react-native";
 
 const key = "Rotis";
 
+/*
 const defaultRotis = [
   { id: 1, date: new Date(), votes: [3, 4, 4, 4] },
   { id: 2, date: new Date(), votes: [3, 4, 4, 4, 5] },
   { id: 3, date: new Date(), votes: [3, 4, 4, 4] },
   { id: 4, date: new Date(), votes: [2, 3, 4, 4, 4] }
 ];
+*/
 
 export const HomeScreen = ({ navigation }) => {
-  const [rotis, setRotis] = useState(defaultRotis);
+  const [rotis, setRotis] = useState(null);
 
   useEffect(() => {
     AsyncStorage.getItem(key).then(rotis => {
-      setRotis(JSON.parse(rotis));
+      setRotis(JSON.parse(rotis) || []);
     });
   }, []);
 
