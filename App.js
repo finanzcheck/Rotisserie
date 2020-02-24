@@ -84,21 +84,29 @@ const Statistics = ({ navigation }) => {
       .fill({})
       .map(fakeRoti)
   };
+
+  const scores = rotis.map(r =>
+    Math.round(r.votes.reduce((sum, vote) => sum + vote)/r.votes.length)
+  );
+
+  console.log(scores);
   return (
     <Container>
       <Text>Big Data</Text>
 
       <FlatList
         horizontal
-        contentContainerStyle={{transform: [{rotateX: "180deg"}],flex:1, height: 100 }}
-        data={[1, 2, 3, 4, 5,3,2,1]}
-        renderItem={({ item }) => {
-          console.log(item);
-          return (
-            <View style={[styles.stats, { height: `${VOTE_MAP[item]}%` }]} />
-          );
+        contentContainerStyle={{
+          flex: 1,
+          height: 100
         }}
-        keyExtractor={i => String(i)}
+        data={scores}
+        renderItem={({ item }) => (
+          <View style={[styles.stats, { height: `${VOTE_MAP[item]}%` }]}>
+            <Text>{item}</Text>
+          </View>
+        )}
+
       />
     </Container>
   );
@@ -119,7 +127,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  stats: { backgroundColor: "green", width: 50 },
+  stats: { backgroundColor: "green", width: 50, alignSelf: "flex-end" },
   container: {
     flex: 1,
     backgroundColor: "#fff",
