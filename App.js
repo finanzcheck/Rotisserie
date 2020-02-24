@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import NewRotiScreen from "./Roti";
 
 const key = "Rotis";
 
@@ -37,18 +38,6 @@ function HomeScreen({ navigation }) {
         />
       </View>
   );
-}
-
-function NewRotiScreen({ navigation }) {
-  return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Roti whoop whoop</Text>
-        <Button
-            title="Go to Home"
-            onPress={() => navigation.navigate('Home')}
-        />
-      </View>
-  )
 }
 
 const Stack = createStackNavigator();
