@@ -1,9 +1,9 @@
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 
-function Button({ title, onPress }) {
+function Button({ title, onPress, type }) {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, type === "success" && styles.successButton]} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
     width: 200,
     height: 75,
     marginBottom: 10
+  },
+  successButton: {
+    backgroundColor: "#2ecc71",
+    shadowColor: "#24b662"
   },
   text: { color: "#ffffff", fontWeight: "bold", fontSize: 20 }
 });
