@@ -1,5 +1,13 @@
 import React from "react";
-import { AsyncStorage, Button, StyleSheet, Text, View } from "react-native";
+import {
+  AsyncStorage,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -61,16 +69,37 @@ const fakeRoti = () => ({
     .fill(1)
     .map(() => Math.floor(Math.random() * (5 - 1 + 1) + 1))
 });
+
+const VOTE_MAP = {
+  1: 10,
+  2: 30,
+  3: 50,
+  4: 80,
+  5: 100
+};
+
 const Statistics = ({ navigation }) => {
   const { rotis } = {
     rotis: Array(10)
       .fill({})
       .map(fakeRoti)
   };
-  console.log(rotis);
   return (
     <Container>
       <Text>Big Data</Text>
+
+      <FlatList
+        horizontal
+        contentContainerStyle={{transform: [{rotateX: "180deg"}],flex:1, height: 100 }}
+        data={[1, 2, 3, 4, 5,3,2,1]}
+        renderItem={({ item }) => {
+          console.log(item);
+          return (
+            <View style={[styles.stats, { height: `${VOTE_MAP[item]}%` }]} />
+          );
+        }}
+        keyExtractor={i => String(i)}
+      />
     </Container>
   );
 };
@@ -90,6 +119,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  stats: { backgroundColor: "green", width: 50 },
   container: {
     flex: 1,
     backgroundColor: "#fff",
