@@ -71,43 +71,42 @@ const fakeRoti = () => ({
 });
 
 const VOTE_MAP = {
-  1: 10,
-  2: 30,
-  3: 50,
-  4: 80,
-  5: 100
+  1: { score: 10, color: "red" },
+  2: { score: 30, color: "orange" },
+  3: { score: 50, color: "yellow" },
+  4: { score: 80, color: "lightgreen" },
+  5: { score: 100, color: "green" }
 };
 
 const Statistics = ({ navigation }) => {
   const { rotis } = {
-    rotis: Array(10)
+    rotis: Array(30)
       .fill({})
       .map(fakeRoti)
   };
 
   const scores = rotis.map(r =>
-    Math.round(r.votes.reduce((sum, vote) => sum + vote)/r.votes.length)
+    Math.round(r.votes.reduce((sum, vote) => sum + vote) / r.votes.length)
   );
 
   console.log(scores);
   return (
     <Container>
-      <Text>Big Data</Text>
-
-      <FlatList
-        horizontal
-        contentContainerStyle={{
-          flex: 1,
-          height: 100
-        }}
-        data={scores}
-        renderItem={({ item }) => (
-          <View style={[styles.stats, { height: `${VOTE_MAP[item]}%` }]}>
-            <Text>{item}</Text>
-          </View>
-        )}
-
-      />
+      <Text>Big Dataaaar</Text>
+      <View
+        style={{ flexDirection: "row", alignItems: "flex-end", width: "100%" }}
+      >
+        {scores.map(s => (
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: VOTE_MAP[s].color,
+              height: VOTE_MAP[s].score,
+              width: `${100 / scores.length}%`
+            }}
+          />
+        ))}
+      </View>
     </Container>
   );
 };
