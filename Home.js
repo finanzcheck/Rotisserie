@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { AsyncStorage, Button, StyleSheet, Text, View } from "react-native";
 
+import HistoryBar from "./History";
+
 const key = "Rotis";
 
 /*
@@ -39,6 +41,7 @@ export const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Rotisserie!</Text>
+        <HistoryBar/>
       {rotiComponents}
       <Button title="Go to Roti" onPress={() => navigation.navigate("Roti")} />
       <Button
