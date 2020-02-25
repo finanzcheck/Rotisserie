@@ -41,7 +41,7 @@ export const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>Rotisserie!</Text>
-        <HistoryBar/>
+      <HistoryBar />
       {rotiComponents}
       <Button title="Go to Roti" onPress={() => navigation.navigate("Roti")} />
       <Button

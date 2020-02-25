@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {Animated, Easing, View} from "react-native";
-import {percentageToColor} from "./utils";
+import React, { useEffect, useState } from "react";
+import { Animated, AsyncStorage, Easing, View, Text } from "react-native";
+import { percentageToColor } from "./utils";
 
-const fakeRoti = () => ({
-  id: 1,
-  participants: Math.ceil(Math.random() * 100),
-  date: Reflect.construct(Date, []),
-  votes: Array(10)
-    .fill(1)
-    .map(() => Math.floor(Math.random() * (5 - 1 + 1) + 1))
-});
+const getRotis = async () => {
+  try {
+    return await AsyncStorage.getItem("roti");
+  } catch (error) {
+    console.log("error getting current roti: ", error);
+  }
+};
 
 const BouncyBar = props => {
-  const [fadeAnim] = useState(new Animated.Value(0)); // Initial value for opacity: 0
+  const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -23,7 +22,7 @@ const BouncyBar = props => {
   }, []);
 
   return (
-    <Animated.View // Special animatable View
+    <Animated.View
       style={{
         ...props.style,
         height: fadeAnim
@@ -34,13 +33,7 @@ const BouncyBar = props => {
   );
 };
 
-const HistoryBar = () => {
-  const { rotis } = {
-    rotis: Array(30)
-      .fill({})
-      .map(fakeRoti)
-  };
-
+const HistoryBar = ({ rotis }) => {
   const scores = rotis.map(r =>
     Math.round(r.votes.reduce((sum, vote) => sum + vote) / r.votes.length)
   );
@@ -69,4 +62,20 @@ const HistoryBar = () => {
   );
 };
 
-export default HistoryBar;
+const HistoryContainer = () => {
+  const [rotis, setRotis] = useState(null);
+  useEffect(() => {
+    getRotis().then(r => setRotis(r));
+  });
+
+  return rotis ? (
+    <HistoryBar rotis={rotis} />
+  ) : (
+    <>
+      <Text style={{ marginBottom: 10 }}>I need more ROTIs to show a 📊…</Text>
+      <Text>Go, have a meeting❗️</Text>
+    </>
+  );
+};
+
+export default HistoryContainer;
