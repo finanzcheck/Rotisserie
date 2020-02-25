@@ -24,10 +24,14 @@ export const HomeScreen = ({ navigation }) => {
     });
   }, []);
 
+  const deleteRotis = () => {
+    AsyncStorage.removeItem("rotis");
+  };
+
   if (!rotis) {
     return (
       <View>
-        <Text>Rotisserie!</Text>
+        <Text style={styles.titleText}>Rotisserie!</Text>
         <Text>Loading...</Text>
       </View>
     );
@@ -41,15 +45,24 @@ export const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Rotisserie!</Text>
+      <Text style={styles.titleText}>Rotisserie!</Text>
       <HistoryBar />
       {rotiComponents}
-      <Button type="neutral" title="Go to Roti" onPress={() => navigation.navigate("Roti")} />
+      <Button
+        type="neutral"
+        title="New Roti"
+        onPress={() => navigation.navigate("Roti")}
+      />
+      <Button title="Delete Rotis" onPress={deleteRotis} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  titleText: {
+    fontSize: 36,
+    fontWeight: "bold"
+  },
   container: {
     flex: 1,
     alignItems: "center",

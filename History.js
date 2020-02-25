@@ -35,7 +35,7 @@ const BouncyBar = props => {
 
 const HistoryBar = ({ rotis }) => {
   const scores = rotis.map(r =>
-    Math.round(r.votes.reduce((sum, vote) => sum + vote) / r.votes.length)
+    Math.round(r.votes.reduce((sum, vote) => sum + vote, 0) / r.votes.length)
   );
 
   const BASE_HEIGHT = 100;
@@ -65,10 +65,9 @@ const HistoryBar = ({ rotis }) => {
 const HistoryContainer = () => {
   const [rotis, setRotis] = useState(null);
   useEffect(() => {
-    getRotis().then(r => setRotis(r));
-  },[]);
+    getRotis().then(r => setRotis(JSON.parse(r)));
+  }, []);
 
-  console.log(rotis);
   return rotis ? (
     <HistoryBar rotis={rotis} />
   ) : (
