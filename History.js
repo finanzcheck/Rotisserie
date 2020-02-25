@@ -72,8 +72,8 @@ const HistoryContainer = () => {
     <HistoryBar rotis={rotis} />
   ) : (
     <>
-      <Text style={{ marginBottom: 10 }}>I need more ROTIs to show a 📊…</Text>
-      <Text>Go, have a meeting❗️</Text>
+      <Text style={{ marginBottom: 10, fontSize: 20 }}>I need more ROTIs to show a 📊…</Text>
+      <Text style={{ fontSize: 20 }}>Go, have a meeting❗️</Text>
     </>
   );
 };

@@ -45,7 +45,10 @@ export const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Rotisserie!</Text>
+      <Text style={styles.titleText}>
+        Rotisserie!
+      </Text>
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
       <HistoryBar />
       {rotiComponents}
       <Button
@@ -54,6 +57,7 @@ export const HomeScreen = ({ navigation }) => {
         onPress={() => navigation.navigate("Roti")}
       />
       <Button title="Delete Rotis" onPress={deleteRotis} />
+      </View>
     </View>
   );
 };
@@ -61,11 +65,11 @@ export const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   titleText: {
     fontSize: 36,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    marginTop: 50
   },
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: "center"
   }
 });
