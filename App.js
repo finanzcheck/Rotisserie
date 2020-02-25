@@ -10,6 +10,9 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { HomeScreen } from "./Home";
+import NewRotiScreen from "./Roti";
+
 const key = "Rotis";
 
 const _storeData = async () => {
@@ -31,30 +34,6 @@ const _retrieveData = async () => {
     // Error retrieving data
   }
 };
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button onPress={_storeData} title="Save" />
-      <Button onPress={_retrieveData} title="Get" />
-      <Button title="Go to Roti" onPress={() => navigation.navigate("Roti")} />
-      <Button
-        title="Go to Stats"
-        onPress={() => navigation.navigate("Statistics")}
-      />
-    </View>
-  );
-}
-
-function NewRotiScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Roti whoop whoop</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate("Home")} />
-    </View>
-  );
-}
 
 const Container = ({ children }) => (
   <View style={styles.container}>{children}</View>
