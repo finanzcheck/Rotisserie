@@ -94,12 +94,12 @@ export const NewRotiScreen = ({ navigation }) => {
     <View style={styles.top}>
       <Text style={styles.titleText}>Pick a value</Text>
       <View style={styles.centered}>
-        <Button title="1" onPress={() => addVoteToRoti(1)} />
-        <Button title="2" onPress={() => addVoteToRoti(2)} />
-        <Button title="3" onPress={() => addVoteToRoti(3)} />
-        <Button title="4" onPress={() => addVoteToRoti(4)} />
-        <Button title="5" onPress={() => addVoteToRoti(5)} />
-        <Button title="Done" type="success" onPress={setRotiAndNavigate} />
+        <Button key="1" title="1" onPress={() => addVoteToRoti(1)} />
+        <Button key="2" title="2" onPress={() => addVoteToRoti(2)} />
+        <Button key="3" title="3" onPress={() => addVoteToRoti(3)} />
+        <Button key="4" title="4" onPress={() => addVoteToRoti(4)} />
+        <Button key="5" title="5" onPress={() => addVoteToRoti(5)} />
+        <Button key="Done" title="Done" type="success" onPress={setRotiAndNavigate} />
       </View>
     </View>
   );
