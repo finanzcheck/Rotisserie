@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Animated, Easing, View } from "react-native";
+import React, {useEffect, useState} from "react";
+import {Animated, Easing, View} from "react-native";
+import {percentageToColor} from "./utils";
 
 const fakeRoti = () => ({
   id: 1,
@@ -9,14 +10,6 @@ const fakeRoti = () => ({
     .fill(1)
     .map(() => Math.floor(Math.random() * (5 - 1 + 1) + 1))
 });
-
-const VOTE_MAP = {
-  1: { score: 10, color: "red" },
-  2: { score: 30, color: "orange" },
-  3: { score: 50, color: "yellow" },
-  4: { score: 80, color: "lightgreen" },
-  5: { score: 100, color: "green" }
-};
 
 const BouncyBar = props => {
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial value for opacity: 0
@@ -52,21 +45,22 @@ const HistoryBar = () => {
     Math.round(r.votes.reduce((sum, vote) => sum + vote) / r.votes.length)
   );
 
+  const BASE_HEIGHT = 100;
   return (
     <View
       style={{
         flexDirection: "row",
         alignItems: "flex-end",
         width: "100%",
-        height: 100
+        height: BASE_HEIGHT
       }}
     >
       {scores.map(s => (
         <BouncyBar
-          height={VOTE_MAP[s].score}
+          height={(s / 5) * BASE_HEIGHT}
           style={{
             flex: 1,
-            backgroundColor: VOTE_MAP[s].color,
+            backgroundColor: percentageToColor(s / 5),
             width: `${100 / scores.length}%`
           }}
         />
