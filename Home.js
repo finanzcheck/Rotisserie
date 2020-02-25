@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { AsyncStorage, Button, StyleSheet, Text, View } from "react-native";
+import { AsyncStorage, StyleSheet, Text, View } from "react-native";
 
 import HistoryBar from "./History";
+import Button from "./Button";
 
 const key = "Rotis";
 
@@ -43,11 +44,7 @@ export const HomeScreen = ({ navigation }) => {
       <Text>Rotisserie!</Text>
       <HistoryBar />
       {rotiComponents}
-      <Button title="Go to Roti" onPress={() => navigation.navigate("Roti")} />
-      <Button
-        title="Go to Statistics"
-        onPress={() => navigation.navigate("Statistics")}
-      />
+      <Button type="neutral" title="Go to Roti" onPress={() => navigation.navigate("Roti")} />
     </View>
   );
 };
@@ -55,7 +52,6 @@ export const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
   }

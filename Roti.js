@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { AsyncStorage, Text, View, StyleSheet } from "react-native";
 import Button from "./Button";
 
@@ -22,7 +22,8 @@ function guidGenerator() {
   );
 }
 
-const CURRENT = "CURRENT_ROTI";
+const CURRENT = "current";
+const ROTIS = "rotis";
 
 const setInitialRoti = async () => {
   try {
@@ -56,38 +57,53 @@ const addVoteToRoti = async value => {
   }
 };
 
-const getCurrentRoti = async () => {
+const saveCurrentRoti = async navigation => {
   try {
     const currentRoti = await AsyncStorage.getItem(CURRENT);
+    const rotis = await AsyncStorage.getItem(ROTIS);
     if (currentRoti !== null) {
-      console.log("currentRoti: ", currentRoti);
+      const parsedCurrentRoti = JSON.parse(currentRoti);
+      const parsedRotis = JSON.parse(rotis);
+      await AsyncStorage.setItem(
+        ROTIS,
+        JSON.stringify(
+          parsedRotis
+            ? parsedRotis.concat(parsedCurrentRoti)
+            : [parsedCurrentRoti]
+        )
+      );
+      navigation.navigate("Result");
     }
   } catch (error) {
-    console.log("error getting current roti: ", error);
+    console.log("error saving current roti: ", error);
     // Error retrieving data
   }
 };
 
-function NewRotiScreen({ navigation }) {
+export const NewRotiScreen = ({ navigation }) => {
   useEffect(() => {
     // init new roti entry
     setInitialRoti();
   }, []);
 
+  const setRotiAndNavigate = useCallback(async () => {
+    await saveCurrentRoti(navigation);
+  }, [navigation]);
+
   return (
     <View style={styles.top}>
-      <Text style={styles.titleText}>Let the ROTI hit the floor</Text>
+      <Text style={styles.titleText}>Pick a value</Text>
       <View style={styles.centered}>
-        <Button title="1" onPress={() => addVoteToRoti(1)} />
-        <Button title="2" onPress={() => addVoteToRoti(2)} />
-        <Button title="3" onPress={() => addVoteToRoti(3)} />
-        <Button title="4" onPress={() => addVoteToRoti(4)} />
-        <Button title="5" onPress={() => addVoteToRoti(5)} />
-        <Button title="Continue" type="success" onPress={getCurrentRoti} />
+        <Button key="1" title="1" onPress={() => addVoteToRoti(1)} />
+        <Button key="2" title="2" onPress={() => addVoteToRoti(2)} />
+        <Button key="3" title="3" onPress={() => addVoteToRoti(3)} />
+        <Button key="4" title="4" onPress={() => addVoteToRoti(4)} />
+        <Button key="5" title="5" onPress={() => addVoteToRoti(5)} />
+        <Button key="Done" title="Done" type="success" onPress={setRotiAndNavigate} />
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   baseText: {
@@ -101,5 +117,3 @@ const styles = StyleSheet.create({
   top: { flex: 1, alignItems: "center", marginTop: 50 },
   centered: { flex: 1, justifyContent: "center" }
 });
-
-export default NewRotiScreen;
