@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Animated, AsyncStorage, Easing, View, Text } from "react-native";
-import { percentageToColor } from "./utils";
 
-const getRotis = async () => {
-  try {
-    return AsyncStorage.getItem("rotis");
-  } catch (error) {
-    console.log("error getting current roti: ", error);
-  }
-};
+import { percentageToColor } from "./utils";
+import {useRotis} from "./useRotis";
 
 const BouncyBar = props => {
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -35,7 +29,7 @@ const BouncyBar = props => {
 
 const HistoryBar = ({ rotis }) => {
   const scores = rotis.map(r =>
-    Math.round(r.votes.reduce((sum, vote) => sum + vote, 0) / r.votes.length)
+    r.votes.reduce((sum, vote) => sum + vote, 0) / r.votes.length
   );
 
   const BASE_HEIGHT = 100;
@@ -63,12 +57,9 @@ const HistoryBar = ({ rotis }) => {
 };
 
 const HistoryContainer = () => {
-  const [rotis, setRotis] = useState(null);
-  useEffect(() => {
-    getRotis().then(r => setRotis(JSON.parse(r)));
-  }, []);
+  const [{ rotis }] = useRotis();
 
-  return rotis ? (
+  return !!rotis.length ? (
     <HistoryBar rotis={rotis} />
   ) : (
     <>

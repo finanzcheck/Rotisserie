@@ -4,7 +4,7 @@ import { AsyncStorage, StyleSheet, Text, View } from "react-native";
 import HistoryBar from "./History";
 import Button from "./Button";
 
-const key = "Rotis";
+import { useRotis } from "./useRotis";
 
 /*
 const defaultRotis = [
@@ -16,17 +16,7 @@ const defaultRotis = [
 */
 
 export const HomeScreen = ({ navigation }) => {
-  const [rotis, setRotis] = useState(null);
-
-  useEffect(() => {
-    AsyncStorage.getItem(key).then(rotis => {
-      setRotis(JSON.parse(rotis) || []);
-    });
-  }, []);
-
-  const deleteRotis = () => {
-    AsyncStorage.removeItem("rotis");
-  };
+  const [{ rotis },,setRotis] = useRotis();
 
   if (!rotis) {
     return (
@@ -56,7 +46,7 @@ export const HomeScreen = ({ navigation }) => {
         title="New Roti"
         onPress={() => navigation.navigate("Roti")}
       />
-      <Button title="Delete Rotis" onPress={deleteRotis} />
+      <Button title="Delete Rotis" onPress={() => setRotis([])} />
       </View>
     </View>
   );
