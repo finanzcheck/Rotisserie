@@ -4,7 +4,7 @@ import { percentageToColor } from "./utils";
 
 const getRotis = async () => {
   try {
-    return await AsyncStorage.getItem("roti");
+    return AsyncStorage.getItem("rotis");
   } catch (error) {
     console.log("error getting current roti: ", error);
   }
@@ -66,8 +66,9 @@ const HistoryContainer = () => {
   const [rotis, setRotis] = useState(null);
   useEffect(() => {
     getRotis().then(r => setRotis(r));
-  });
+  },[]);
 
+  console.log(rotis);
   return rotis ? (
     <HistoryBar rotis={rotis} />
   ) : (
