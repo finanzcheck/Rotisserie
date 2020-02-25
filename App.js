@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AsyncStorage,
   Button,
   StyleSheet,
   Text,
   View,
-  FlatList,
-  TouchableOpacity
+  Animated, Easing
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -78,6 +77,29 @@ const VOTE_MAP = {
   5: { score: 100, color: "green" }
 };
 
+const BouncyBar = props => {
+  const [fadeAnim] = useState(new Animated.Value(0)); // Initial value for opacity: 0
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: props.height,
+        easing: Easing.bounce,
+      duration: 1000
+    }).start();
+  }, []);
+
+  return (
+    <Animated.View // Special animatable View
+      style={{
+        ...props.style,
+        height: fadeAnim
+      }}
+    >
+      {props.children}
+    </Animated.View>
+  );
+};
+
 const Statistics = ({ navigation }) => {
   const { rotis } = {
     rotis: Array(30)
@@ -94,14 +116,14 @@ const Statistics = ({ navigation }) => {
     <Container>
       <Text>Big Dataaaar</Text>
       <View
-        style={{ flexDirection: "row", alignItems: "flex-end", width: "100%" }}
+        style={{ flexDirection: "row", alignItems: "flex-end", width: "100%", height: 100 }}
       >
         {scores.map(s => (
-          <View
+          <BouncyBar
+            height={VOTE_MAP[s].score}
             style={{
               flex: 1,
               backgroundColor: VOTE_MAP[s].color,
-              height: VOTE_MAP[s].score,
               width: `${100 / scores.length}%`
             }}
           />
